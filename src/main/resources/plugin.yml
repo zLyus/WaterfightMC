@@ -1,8 +1,3 @@
 name: Waterfight
 version: '${project.version}'
-main: me.ghaxz.waterfight.Waterfight
-
-commands:
-  inventory:
-    description: Opens the inventory configuration GUI
-    usage: /inventory
+main: me.lyus.waterfight.Waterfight

@@ -1,6 +1,5 @@
 package me.lyus.waterfight;
 
-import me.lyus.waterfight.commands.InventoryCommand;
 import me.lyus.waterfight.eventhandlers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,21 +10,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
-/**
- * TODO: Rewrite Inventory system
- */
-
 public final class Waterfight extends JavaPlugin {
     private static Waterfight instance;
     private ArrayList<String> deathMessages;
     private HashMap<String, Integer> playerKills;
     private HashMap<String, Inventory> inventoryConfigs;
     private Inventory defaultInv;
-    private Inventory sortInv;
-
-
-    private final int inventoryOffset = 36;
-    private final int configInventorySize = 9;
 
     @Override
     public void onEnable() {
@@ -34,9 +24,7 @@ public final class Waterfight extends JavaPlugin {
         inventoryConfigs = new HashMap<>();
         defaultInv = setUpDefaultInv();
 
-        setUpSortInv();
         setUpDefaultInv();
-        fillDefaultInv();
         playerKills = new HashMap<>();
 
 
@@ -50,35 +38,18 @@ public final class Waterfight extends JavaPlugin {
                 "<Player> should not mess with <Killer> again"
         );
 
-        this.getCommand("inventory").setExecutor(new InventoryCommand());
-
         Bukkit.getPluginManager().registerEvents(new OnEntityDamage(), this);
         Bukkit.getPluginManager().registerEvents(new OnItemDamage(), this);
         Bukkit.getPluginManager().registerEvents(new OnPlayerDeath(), this);
         Bukkit.getPluginManager().registerEvents(new OnPlayerLogin(), this);
         Bukkit.getPluginManager().registerEvents(new OnPlayerRespawn(), this);
+        Bukkit.getPluginManager().registerEvents(new onInventoryClose(), this);
+        Bukkit.getPluginManager().registerEvents(new OnPlayerDropItem(), this);
     }
 
     @Override
     public void onDisable() {
 
-    }
-
-    public void setUpSortInv() {
-        sortInv = Bukkit.createInventory(null, 9, "Sort Items");
-
-        ItemStack woodsword = new ItemStack(Material.WOOD_SWORD, 1);
-        ItemStack snowball = new ItemStack(Material.SNOW_BALL, 10);
-        ItemStack rod = new ItemStack(Material.FISHING_ROD, 1);
-        ItemStack enderpearl = new ItemStack(Material.ENDER_PEARL,1);
-        sortInv.setItem(0, woodsword);
-        sortInv.setItem(1, snowball);
-        sortInv.setItem(2, rod);
-        sortInv.setItem(3, enderpearl);
-    }
-
-    public Inventory getSortInv() {
-        return sortInv;
     }
 
     public Inventory setUpDefaultInv() {
@@ -96,13 +67,8 @@ public final class Waterfight extends JavaPlugin {
         return inv;
     }
 
-    public void fillDefaultInv() {
-        Bukkit.getServer().getOnlinePlayers().forEach(Player -> {
-            Player.getInventory().addItem(new ItemStack(Material.WOOD_SWORD, 1));
-            Player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 10));
-            Player.getInventory().addItem(new ItemStack(Material.FISHING_ROD, 1));
-            Player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
-        });
+    public HashMap<String, Inventory> getInventoryConfigs() {
+        return inventoryConfigs;
     }
 
     public Inventory getDefaultInv() {

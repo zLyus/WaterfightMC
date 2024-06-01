@@ -1,6 +1,7 @@
 package me.lyus.waterfight.eventhandlers;
 
 import me.lyus.waterfight.Waterfight;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,9 +16,9 @@ public class OnPlayerLogin implements Listener {
 
             player.setPlayerListName(player.getDisplayName() + Waterfight.getInstance().getPlayerKills().get(player.getName()));
 
-            if (Waterfight.getInstance().getPlayerKills().containsKey(player.getName())) {
-                Waterfight.getInstance().addPlayer(player);
-            }
+            Bukkit.getServer().getOnlinePlayers().forEach(Player -> {
+                Waterfight.getInstance().getInventoryConfigs().put(Player.getName(), Waterfight.getInstance().getDefaultInv());
+            });
 
         }
     }

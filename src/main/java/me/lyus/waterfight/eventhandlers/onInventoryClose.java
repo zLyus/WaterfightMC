@@ -11,11 +11,14 @@ public class onInventoryClose implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (event.getInventory().equals(Waterfight.getInstance().getSortInv())) {
-            Inventory sortInv = event.getInventory();
-            Player player = (Player) event.getPlayer();
-            Waterfight.getInstance().setInventoryConfig(player, sortInv);
-
-        }
+       if(event.getPlayer() instanceof Player) {
+           Inventory inv = event.getInventory();
+           Player player = (Player) event.getPlayer();
+           if(Waterfight.getInstance().getInventoryConfigs().get(player.getName()) != null) {
+               Waterfight.getInstance().getInventoryConfigs().get(player.getName()).setContents(inv.getContents());
+           } else {
+               Waterfight.getInstance().getInventoryConfigs().put(player.getName(), inv);
+           }
+       }
     }
 }
