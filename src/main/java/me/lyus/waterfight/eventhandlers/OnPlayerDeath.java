@@ -1,6 +1,6 @@
-package me.ghaxz.waterfight.eventhandlers;
+package me.lyus.waterfight.eventhandlers;
 
-import me.ghaxz.waterfight.Waterfight;
+import me.lyus.waterfight.Waterfight;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,9 +22,8 @@ public class OnPlayerDeath implements Listener {
                     Player.sendMessage(attacker.getName() + "is on a Killstreak of" + killStreak);
                 });
             }
-            // Adding Pearls and Snowballs
-            int itemCount = countSnowballs(attacker);
-            addItems(attacker, (10 - itemCount), killStreak);
+            // Adding Items for a kill
+            addItems(attacker);
             // Adding a kill for the Killer
                 Waterfight.getInstance().addKill(attacker);
 
@@ -43,11 +42,12 @@ public class OnPlayerDeath implements Listener {
         return count;
     }
 
-    private void addItems(Player player, int snowBallAmount, int enderPearlAmount) {
-        ItemStack enderpearl = new ItemStack(Material.ENDER_PEARL, enderPearlAmount);
-        ItemStack snowball = new ItemStack(Material.SNOW_BALL, snowBallAmount);
-        Waterfight.getInstance().playerAddItems(player, enderpearl);
-        Waterfight.getInstance().playerAddItems(player, snowball);
+    private void addItems(Player player) {
+        if(Waterfight.getInstance().getCustomInv(player) != null) {
+            player.getInventory().setContents(Waterfight.getInstance().getCustomInv(player).getContents());
+        } else {
+            player.getInventory().setContents(Waterfight.getInstance().getDefaultInv().getContents());
+        }
 
     }
 

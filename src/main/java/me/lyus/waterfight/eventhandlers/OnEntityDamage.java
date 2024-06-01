@@ -1,6 +1,6 @@
-package me.ghaxz.waterfight.eventhandlers;
+package me.lyus.waterfight.eventhandlers;
 
-import me.ghaxz.waterfight.Waterfight;
+import me.lyus.waterfight.Waterfight;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

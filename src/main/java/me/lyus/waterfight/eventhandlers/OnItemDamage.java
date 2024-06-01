@@ -1,4 +1,4 @@
-package me.ghaxz.waterfight.eventhandlers;
+package me.lyus.waterfight.eventhandlers;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
